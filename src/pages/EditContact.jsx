@@ -1,69 +1,86 @@
 import React, { useEffect, useState } from 'react'
 import useGlobalReducer from '../hooks/useGlobalReducer'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 const EditContact = () => {
-
-    const { store } = useGlobalReducer()
+    const { store, dispatch } = useGlobalReducer()
     const params = useParams()
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
+        id: "",
         name: "",
         phone: "",
         email: "",
         address: ""
     })
 
+
     useEffect(() => {
-        const contact = store.contacts.find(
-            (c) => c.id === parseInt(params.id)
-        )
-        if (contact) setFormData(contact)
+        const contact = store.contacts.find(c => c.id === parseInt(params.id))
+        if (contact) setFormData({ ...contact })
     }, [params.id, store.contacts])
+
 
     const handleChange = e => {
         const { name, value } = e.target
-        setFormData({ ...formData, [name]: value })
+        setFormData(prev => ({ ...prev, [name]: value }))
     }
+
 
     const handleSubmit = e => {
         e.preventDefault()
-        updateContact(formData)
+        if (!formData.id) {
+            alert("No se puede actualizar: id del contacto no encontrado")
+            return
+        }
+        updateContact()
     }
 
-    const updateContact = (info_contact) => {
-        fetch(`https://playground.4geeks.com/contact/agendas/emily/contacts/${info_contact.id}`, {
+    const updateContact = () => {
+        fetch(`https://playground.4geeks.com/contact/agendas/emily/contacts/${formData.id}`, {
             method: 'PUT',
-            body: JSON.stringify(info_contact),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            body: JSON.stringify(formData),
+            headers: { 'Content-Type': 'application/json' }
         })
-            .then((response) => response.json())
-            .then((data) => {
+            .then(res => {
+                if (!res.ok) throw new Error(`Error: ${res.status}`)
+                return res.json()
+            })
+            .then(data => {
+
                 Swal.fire({
                     text: `Contacto ${data.name} actualizado`,
-                    icon: "success",
+                    icon: 'success',
                     timer: 1500
                 })
+
+                dispatch({ type: 'UPDATE_CONTACT', payload: data })
+
+                navigate('/')
             })
-            .catch((error) => console.log(error.message))
+            .catch(err => console.log(err))
     }
 
     return (
         <div className="container">
-            <h1>Edit Contact</h1>
+
+            <h3 className='mb-5'>Edit Contact</h3>
 
             <form onSubmit={handleSubmit}>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} />
-                <input type="email" name="email" value={formData.email} onChange={handleChange} />
-                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} />
-                <input type="text" name="address" value={formData.address} onChange={handleChange} />
 
-                <button className="btn btn-warning w-100 mt-3">
+                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" className="form-control my-2" />
+                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" className="form-control my-2" />
+                <input type="tel" name="telf" value={formData.phone} onChange={handleChange} placeholder="Phone" className="form-control my-2" />
+                <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Address" className="form-control my-2" />
+
+                <button type="submit" className="btn w-100 mt-3" style={{ color: "white", backgroundColor: '#634472ff' }}>
                     Update Contact
                 </button>
+
             </form>
+
         </div>
     )
 }

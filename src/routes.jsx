@@ -10,7 +10,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route element={<Layout />}>
-      
+
         <Route index element={<Home />} />
 
         <Route path="add-contact" element={<AddContact />} />

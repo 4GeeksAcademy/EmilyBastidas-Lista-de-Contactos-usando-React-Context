@@ -41,19 +41,33 @@ const AddContact = () => {
 
     return (
         <div className="container">
-            <h1>Add Contact</h1>
+
+            <h3 className='mb-5'>Add Contact</h3>
 
             <form onSubmit={handleSubmit}>
-                <input type="text" name="name" placeholder="Name"
-                    value={formData.name} onChange={handleChange} />
-                <input type="email" name="email" placeholder="Email"
-                    value={formData.email} onChange={handleChange} />
-                <input type="tel" name="phone" placeholder="Phone"
-                    value={formData.phone} onChange={handleChange} />
-                <input type="text" name="address" placeholder="Address"
-                    value={formData.address} onChange={handleChange} />
 
-                <button className="btn btn-primary w-100 mt-3">
+                <div className="mb-3">
+                    <label htmlFor="Full-name" className="form-label">Full Name</label>
+                    <input type="text" name='name' className="form-control" id="Full-Name" aria-describedby="Full-Name" value={formData.name} onChange={handleChange} />
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email</label>
+                    <input type="email" className="form-control" id="email" name="email" value={formData.email} onChange={handleChange} />
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="phone" className="form-label">Phone</label>
+                    <input type="tel" className="form-control" id="phone" name="phone" value={formData.phone} onChange={handleChange} />
+                </div>
+
+
+                <div className="mb-3">
+                    <label htmlFor="address" className="form-label">Address</label>
+                    <input type="text" className="form-control" id="address" name="address" value={formData.address} onChange={handleChange} />
+                </div>
+
+                <button className="btn w-100 mt-3" style={{ color: "white", backgroundColor: '#634472ff' }}>
                     Save Contact
                 </button>
             </form>
