@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useGlobalReducer from '../hooks/useGlobalReducer'
+import {useGlobalReducer} from '../hooks/useGlobalReducer'
 
 
 const AddContact = () => {
