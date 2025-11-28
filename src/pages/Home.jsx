@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Swal from 'sweetalert2';
-import useGlobalReducer from "../hooks/useGlobalReducer";
+import {useGlobalReducer} from "../hooks/useGlobalReducer";
 import { CardContact } from '../components/CardContact';
 
 const Home = () => {

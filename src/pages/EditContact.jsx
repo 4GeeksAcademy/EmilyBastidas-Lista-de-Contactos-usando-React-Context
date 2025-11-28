@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import useGlobalReducer from '../hooks/useGlobalReducer'
+import {useGlobalReducer} from '../hooks/useGlobalReducer'
 import { useParams, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
