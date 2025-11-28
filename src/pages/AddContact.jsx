@@ -47,8 +47,8 @@ const AddContact = () => {
             <form onSubmit={handleSubmit}>
 
                 <div className="mb-3">
-                    <label htmlFor="Full-name" className="form-label">Full Name</label>
-                    <input type="text" name='name' className="form-control" id="Full-Name" aria-describedby="Full-Name" value={formData.name} onChange={handleChange} />
+                    <label htmlFor="FullName" className="form-label">Full Name</label>
+                    <input type="text" name='name' className="form-control" id="FullName" aria-describedby="FullName" value={formData.name} onChange={handleChange} />
                 </div>
 
                 <div className="mb-3">
